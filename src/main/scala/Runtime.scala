@@ -26,7 +26,8 @@ object Runtime {
   @JSExport def encodeTup4[A, B, C, R](f: js.Object with js.Dynamic): Tuple4[A, B, C, R] =
     (f._1.asInstanceOf[A], f._2.asInstanceOf[B], f._3.asInstanceOf[C], f._4.asInstanceOf[R])
 
-  @JSExport def decodeOptions[A >: Null](opt: Option[A]): A = null
+  @JSExport def decodeOptions[A >: Null](opt: Option[A]): A =
+    if (opt.isDefined) opt.get else null
   @JSExport def decodeSeq[A](arr: Seq[A]): js.Array[A] = arr.toJSArray
   @JSExport def decodeMap[A](dict: collection.mutable.Map[String, A]): js.Dictionary[A] =
     dict.toJSDictionary
